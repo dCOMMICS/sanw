@@ -255,6 +255,12 @@ body{
   font-weight: var(--weight-semiBold);
 }
 
+.label-medium{
+  font-size: var(--fs-label-medium);
+  line-height: var(--lh-headline-medium);
+  font-weight: var(--weight-semiBold);
+  letter-spacing: var(--traking-p-05);
+}
 
 
 
