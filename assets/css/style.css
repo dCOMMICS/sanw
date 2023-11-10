@@ -194,6 +194,61 @@ body{
 \*-----------------------------------*/
 
 
+/* change small and medium from bold to semi-bold */
+.headline-large{
+  font-size: var(--fs-headline-large);
+  line-height: var(--lh-headline-large);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--traking-n-025);
+}
+
+.headline-medium{
+  font-size: var(--fs-headline-medium);
+  line-height: var(--lh-headline-medium);
+  font-weight: var(--weight-bold);
+  
+}
+
+.headline-small{
+  font-size: var(--fs-headline-small);
+  line-height: var(--lh-headline-small);
+  font-weight: var(--weight-bold);
+  
+}
+
+.title-large{
+  font-size: var(--fs-title-large);
+  line-height: var(--lh-title-large);
+  font-weight: var(--weight-bold);
+  
+}
+
+.title-medium{
+  font-size: var(--fs-title-medium);
+  line-height: var(--lh-title-medium);
+  font-weight: var(--weight-bold);
+  
+}
+
+
+.title-small{
+  font-size: var(--fs-title-small);
+  line-height: var(--lh-title-small);
+  font-weight: var(--weight-bold);
+  
+}
+
+.body-large{
+  font-size: var(--fs-body-large);
+  line-height: var(--lh-body-large);
+  font-weight: var(--weight-semiBold);
+}
+
+.body-medium{
+  font-size: var(--fs-body-large);
+  line-height: var(--lh-body-large);
+  font-weight: var(--weight-semiBold);
+}
 
 
 
