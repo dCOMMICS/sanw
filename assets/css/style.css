@@ -164,6 +164,28 @@ select{
   
 }
 
+html{
+  font-family: var(--font-primary);
+  font-size: var(--fs-base);
+  scroll-behavior: smooth;
+}
+
+body{
+  background-color: var(--neutral-98);
+  color: var(--neutral-5);
+  font-size: var(--fs-body-medium);
+  line-height: var(--lh-body-medium);
+  height: 300vh;
+}
+
+::-webkit-scrollbar{width: 12px;}
+
+::-webkit-scrollbar-track{background-color: var(--neutral-90);}
+::-webkit-scrollbar-thumb{
+  background-color: var(--neutral-60);
+  border-radius: 4px;
+}
+
 
 
 
