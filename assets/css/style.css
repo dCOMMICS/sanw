@@ -77,6 +77,36 @@
 --lh-label-large: 24px;
 --lh-label-medium: 20px;
 
+/* FONT WEIGHT */
+--weight-bold: 700;
+--weight-semiBold: 600;
+--weight-regular: 400;
+
+/* LETTER SPACING */
+--traking-n-025: -0.25px;
+--traking-p-05: 0.5px;
+
+/* RADIUS */
+
+--radius-small: 8px;
+--radius-medium: 12px;
+--radius-large: 16px;
+--radius-extra-large: 32px;
+--radius-full: 1000px;
+--radius-circle: 50%;
+
+/* SHADOW */
+
+--shadow-1: 0px 2px 4px 0px #00000033;
+--shadow-2: 0px 5px 10px 0px #0000000D;
+--shadow-3: 0px 5px 10px 0px #00000033;
+--shadow-4: 0px 10px 20px 0px #0000001A;
+
+/* TRANSITION */
+
+--transition-easing-quick: cubic-bezier(0, 0.7, 0.3, 1);
+--transition-duration-quick: 200ms;
+--transition-duration-smooth: 500ms;
 }
 
 
