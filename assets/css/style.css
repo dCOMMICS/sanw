@@ -245,10 +245,16 @@ body{
 }
 
 .body-medium{
-  font-size: var(--fs-body-large);
-  line-height: var(--lh-body-large);
+  font-size: var(--fs-body-medium);
+  line-height: var(--lh-body-medium);
   font-weight: var(--weight-semiBold);
 }
+.body-small{
+  font-size: var(--fs-body-small);
+  line-height: var(--lh-body-small);
+  font-weight: var(--weight-semiBold);
+}
+
 
 
 
