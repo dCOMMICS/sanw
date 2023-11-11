@@ -115,6 +115,7 @@ Letter spacing
 
 ### Box Shadow
 
+
 ``` css
 --shadow-1: 0px 2px 4px 0px #00000033;
 --shadow-2: 0px 5px 10px 0px #0000000D;
