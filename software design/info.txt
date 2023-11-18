@@ -28,3 +28,6 @@ salary: float
 -	postal code
 -	city
 (strings)
+
+
+https://github.com/imhilla/jira_clone/blob/master/README.md?plain=1
