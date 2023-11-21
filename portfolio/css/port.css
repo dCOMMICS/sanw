@@ -4,3 +4,12 @@ img {
     max-width: 100%;
   }
   
+  .cntelemt{
+    align-items: flex-end;
+    /* color: darkgoldenrod; */
+    float: right;
+  }
+  h4.cntelem{
+    align-items: end;
+    color: darkgoldenrod;
+  }
