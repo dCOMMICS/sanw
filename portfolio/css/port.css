@@ -37,4 +37,6 @@ body{
   .wor1contacts h4{
     float: right;
   }
-
+hr{
+    border-style: groove;
+}
