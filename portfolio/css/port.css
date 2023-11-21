@@ -39,6 +39,6 @@ body{
   }
 hr{
     border-style: groove;
-    height: 2px;
-    width: 100px;
+    /* height: 2px; */
+    /* width: 100px; */
 }
