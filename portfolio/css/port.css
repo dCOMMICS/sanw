@@ -13,3 +13,7 @@ img {
     align-items: end;
     color: darkgoldenrod;
   }
+
+  #picha{
+    float: left;
+  }
