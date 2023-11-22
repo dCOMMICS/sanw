@@ -24,3 +24,11 @@ ul,li{
 hr{
     border-style: groove;
 }
+/* body{
+    background: linear-gradient(90deg, ffcb52, f37055, 
+        ef4e7b, a166ab, c165dd, 1de5e2, 5581f1);
+     filter: blur(15px);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+} */
