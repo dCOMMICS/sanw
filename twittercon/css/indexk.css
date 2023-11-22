@@ -5,3 +5,22 @@ h1{
     color: firebrick;
     text-align: center;
 }
+div a{
+    text-decoration: none;
+    color:#000000 ;
+    font-size: 55px;
+    font-weight: bolder;
+}
+p{
+    line-height: 40px;
+    letter-spacing: 0.47px;
+}
+ul,li{
+    line-height: 32px;
+    font-style: normal;
+    text-transform: capitalize;
+}
+
+hr{
+    border-style: groove;
+}
