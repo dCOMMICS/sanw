@@ -42,6 +42,7 @@ body{
   .wor1contacts h4{
     float: right;
   }
+
 hr{
     border-style: groove;
     /* height: 2px; */
@@ -52,4 +53,5 @@ hr{
 
 #125{
   text-decoration: none;
+  color: lavender;
 }
