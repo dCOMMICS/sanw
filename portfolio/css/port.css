@@ -55,3 +55,7 @@ hr{
   text-decoration: none;
   color: lavender;
 }
+
+p :right{
+  text-decoration: none;
+}
