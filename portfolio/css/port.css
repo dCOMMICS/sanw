@@ -51,9 +51,10 @@ hr{
 
 
 
-#125{
+p #125{
   text-decoration: none;
   color: lavender;
+  text-transform: lowercase;
 }
 
 .plas{
