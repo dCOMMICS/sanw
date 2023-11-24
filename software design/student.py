@@ -16,6 +16,8 @@ service_name = carrier.name_for_number(new_number,"en")
 print(service_name)
 
 
+# fuckkkkkkkkkkkkkkkk shit 
+
 geocoder = OpenCageGeocode(key)
 query = str(location)
 result = geocoder.geocode(query)
