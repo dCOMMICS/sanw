@@ -1,0 +1,55 @@
+/* body{
+    background-color: aqua;
+}
+.box-1{
+    box-sizing: content-box;
+    background-color: antiquewhite;
+    width: 700px;
+    height: 300px;
+    padding: 50px;
+    
+}
+
+.box-2{
+    box-sizing: border-box;
+    background-color: aliceblue;
+    width: 700px;
+    height: 300px;
+    padding: 50px;
+} */
+
+.content-box { 
+    box-sizing: content-box; 
+  }
+  .padding-box {
+    box-sizing: padding-box; 
+  }
+  .border-box { 
+    box-sizing: border-box; 
+  }
+  
+  /* Pen Styling, unrelated to box-sizing */
+  body { 
+    font-family: sans-serif; 
+  }
+  .demo { 
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    background: #eee;
+  }
+  h4 {
+    margin: 0 0 0.5rem 0;
+  }
+  div[class*="box"] {
+    width: 300px;
+    padding: 20px;
+    background: #444;
+    color: white;
+    border: 10px solid red;
+    background-clip: content-box;
+    text-indent: 20px;
+  }
+  .image {
+    width: 100px;
+    height: 100px;
+  }
