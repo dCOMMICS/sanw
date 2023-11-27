@@ -10,7 +10,7 @@ div {
   }
 
   span {
-    display: inline-block;
+    display: none;
     background-color: #006100;
     width: 140px;
     height: 140px;
