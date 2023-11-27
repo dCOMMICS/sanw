@@ -30,7 +30,8 @@
   
   /* Pen Styling, unrelated to box-sizing */
   body { 
-    font-family: sans-serif; 
+    font-family: sans-serif;
+     
   }
   .demo { 
     margin: 0 0 1rem 0;
