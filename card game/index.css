@@ -8,6 +8,8 @@ body {
 div {
     max-width: 600px;
   }
-span {
+
+  span {
+    display: block;
     background-color: #006100;
   }
