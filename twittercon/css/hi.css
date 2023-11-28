@@ -1,8 +1,8 @@
 #div-1 { background-color: #FF5C35; }
 
 #div-2 {
-  position: fixed;
-  top: 30px;
+  position: absolute;
+  top: 20px;
   left: 30px;
   background-color: #0068B1;
 }
@@ -18,4 +18,11 @@ div {
   line-height: 75px;
   color: white;
   font-size: 24px;
+}
+
+#container {
+  background-color: #B6C7D6;
+  width: 200px;
+  height: 150px;
+  position: relative;
 }
