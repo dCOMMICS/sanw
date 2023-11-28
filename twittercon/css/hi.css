@@ -1,25 +1,4 @@
-#div-1 { background-color: #FF5C35; }
-
-#div-2 {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0px;
-  background-color: #0068B1;
+img {
+  float: inherit;
+  height: 150px;
 }
-
-#div-3 { background-color: #4FB06D; }
-
-div {
-  width: 75px;
-  height: 75px;
-  margin: 10px;
-  border-radius: 10px;
-  text-align: center;
-  line-height: 75px;
-  color: white;
-  font-size: 24px;
-}
-
-.generic { background-color: lightgray; }
-
-body { height: 1500px; }
