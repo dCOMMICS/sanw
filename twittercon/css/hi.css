@@ -1,7 +1,9 @@
 #div-1 { background-color: #FF5C35; }
 
 #div-2 {
-  position: static;
+  position: relative;
+  top: 30px;
+  left: 30px;
   background-color: #0068B1;
 }
 
