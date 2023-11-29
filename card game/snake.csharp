@@ -1,0 +1,7 @@
+namespace Snake 
+{
+    public enum GridValue
+    {
+        
+    }
+}
