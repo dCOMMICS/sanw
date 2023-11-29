@@ -12,6 +12,7 @@ function reveal() {
         reveals[i].classList.remove("active");
       }
     }
+    
   }
   
   window.addEventListener("scroll", reveal);
