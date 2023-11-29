@@ -29,7 +29,7 @@ export default function AnimatedStyleUpdateExample(props) {
         flexDirection: "column",
       }}
     >
-      
+
       <Animated.View
         style={[
           { width: 100, height: 80, backgroundColor: "black", margin: 30 },
@@ -42,6 +42,7 @@ export default function AnimatedStyleUpdateExample(props) {
           randomWidth.value = Math.random() * 350;
         }}
       />
+      
     </View>
   );
 }
