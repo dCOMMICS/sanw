@@ -204,6 +204,7 @@ async function checkFileSize(filePath) {
       brotli.length
     )}`
   )
+  
 
   if (writeSize)
     await fs.writeFile(
