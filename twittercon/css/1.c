@@ -1,12 +1,18 @@
-#include  <studio.h>
- int main (void)
- {
-    int i = get_int ("what's i ?");
-    int j = get_int (" what's j?");
- }
+#include <stdio.h>
 
- if(i<y)
+int main(void) {
+    int i, j;
 
- {
-    printf (" i is less than j!\n");    
- }
+    
+    printf("Enter the value for i: ");
+    scanf("%d", &i);
+
+    printf("Enter the value for j: ");
+    scanf("%d", &j);
+
+   
+    if (i < j) {
+        printf("i is less than j!\n");
+    }
+
+    return 0;
