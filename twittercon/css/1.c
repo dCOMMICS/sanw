@@ -10,6 +10,7 @@ int main(void) {
     printf("Enter the value for j: ");
     scanf("%d", &j);
 
+
     if (i < j) {
         printf("i is less than j!\n");
     }
