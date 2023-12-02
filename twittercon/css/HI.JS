@@ -37,7 +37,7 @@ const multiplesThreeAndFive = (num) => {
     return sum
   }
   
-  
+
   export { multiplesThreeAndFive }
 
 
@@ -53,6 +53,7 @@ export const EvenFibonacci = (limit) => {
 
   const highestIndex = Math.floor(Math.log(limit * SQ5) / Math.log(PHI))
   const n = Math.floor(highestIndex / 3)
+  
   return Math.floor(
     ((PHI ** (3 * n + 3) - 1) / (PHI ** 3 - 1) -
       ((1 - PHI) ** (3 * n + 3) - 1) / ((1 - PHI) ** 3 - 1)) /
