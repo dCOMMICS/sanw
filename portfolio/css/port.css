@@ -1,4 +1,4 @@
-img {
+/* /* img {
     overflow: hidden;
     border-radius: 50%;
     max-width: 100%;
@@ -29,7 +29,7 @@ body{
 }
 
 /* scroll animation */
-.reveal{
+/* .reveal{
     position: relative;
     transform: translateY(150px);
     opacity: 0;
@@ -45,10 +45,10 @@ body{
 
   
 hr{
-    border-style: groove;
+    border-style: groove; */
     /* height: 2px; */
     /* width: 100px; */
-}
+/* }
 
 
 
@@ -60,4 +60,5 @@ p #125{
 
 .plas{
   text-decoration: none;
-}
+}   */
+
