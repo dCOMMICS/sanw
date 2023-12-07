@@ -1006,3 +1006,200 @@ RPH.resizeCanvas = function() {
 RPH.init();
 
 window.addEventListener('resize', RPH.resizeCanvas, false);
+
+
+
+
+
+//  super wek peeter
+
+
+class App extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        time: 0
+      }
+      this.animate = this.animate.bind(this)
+    }
+  
+    render() {
+      return (
+        <div style={{
+          width: 600,
+          margin: 'auto'
+        }}>
+          <Drawing time={this.state.time}/>
+        </div>
+      )
+    }
+    
+    animate() {
+      requestAnimationFrame(() => {
+        this.setState({
+          time: this.state.time + 0.02
+        })
+        this.animate()
+      })    
+    }
+  
+    componentDidMount() {
+      this.animate()
+    }
+  }
+  
+  function isFirstPointRepeated(polygonCoordinates) {
+    const firstPoint = polygonCoordinates[0]
+    const lastPoint = polygonCoordinates[polygonCoordinates.length - 1]
+    return (firstPoint[0] === lastPoint[0]) && (firstPoint[1] === lastPoint[1])
+  }
+  
+  function getPointCount(polygonCoordinates) {
+    let length = polygonCoordinates.length
+    if (isFirstPointRepeated(polygonCoordinates)) {
+      length -= 1
+    }
+    return length
+  }
+  
+  function getCentroid(polygonCoordinates) {
+    const pointCount = getPointCount(polygonCoordinates)
+    return polygonCoordinates.reduce((centroid, currentPoint, index, polygonCoordinates) => {
+      return [centroid[0] + currentPoint[0] / pointCount, centroid[1] + currentPoint[1] / pointCount]
+    })
+  }
+  
+  function scatter(point, basePoint, time) {
+    const baseVector = [basePoint[0] + 40, basePoint[1]]
+    const timeFactor = 1 - Math.cos(time)
+    return [
+      point[0] + baseVector[0] * 0.02 * timeFactor,
+      point[1] + baseVector[1] * 0.03 * timeFactor
+    ]
+  }
+  
+  const colors = {
+    red: '#D13233',
+    blue: '#143C6B'
+  }
+  
+  const pieces = [[[14.4, -45.15], [17.19, -48.1], [20.11, -36.42], [14.4, -45.15]], [[23.65, -41.11], [19.08, -16.8], [30.66, -39.22], [23.65, -41.11]], [[13.44, -29.3], [0.19, -7.18], [0.42999999999999999, -29.88], [13.44, -29.3]], [[18.95, -32.18], [6.44, -12.01], [13.14, -7.52], [18.95, -32.18]], [[25.94, -26.71], [19.23, 0.78000000000000003], [36.69, 0.63], [25.94, -26.71]], [[37.29, -5.01], [41.42, -3.85], [40.31, 6.13], [37.29, -5.01]], [[30.91, 15.92], [45.04, 13.68], [45.08, 18.38], [30.91, 15.92]], [[17.16, 12.51], [28.07, 7.54], [18.5, 3.82], [17.16, 12.51]], [[8.359999999999999, -2.49], [12.9, 21.33], [17.95, -9.44], [8.359999999999999, -2.49]], [[4.41, -8.310000000000001], [1.5, 19.8], [9.51, 18.68], [4.41, -8.310000000000001]], [[16.5, 23.79], [18.49, 15.43], [34.97, 28.95], [16.5, 23.79]], [[28.84, 34.86], [30.77, 31.8], [33.77, 40.45], [28.84, 34.86]], [[3.15, 23.07], [24.24, 28.82], [20.24, 43.82], [3.15, 23.07]], [[0.14000000000000001, 26.14], [0.20999999999999999, 46.45], [14.08, 46.33], [0.14000000000000001, 26.14]]]
+  
+  const wholes = [
+    [
+      [-15.9, -15.91],
+      [-0.23000000000000001, -29.87],
+      [-0.23000000000000001, -13.3],
+      [-15.9, -15.91],
+      [-16.52, -28.96]
+    ],
+    [
+      [-15.59, -9.310000000000001],
+      [-0.23000000000000001, -5.46],
+      [-4.89, -5.48],
+      [-15.59, -9.310000000000001],
+      [-15.88, -15.47],
+      [-0.23000000000000001, -12.86]
+    ],
+    [
+      [-19.28, 43.0],
+      [-0.23000000000000001, 46.45],
+      [-14.96, 46.72],
+      [-19.28, 43.0],
+      [-17.94, 37.88],
+      [-20.12, 0.90000000000000002],
+      [-15.32, -3.86],
+      [-15.57, -8.84],
+      [-4.97, -5.05],
+      [-0.23000000000000001, -5.02]
+    ],
+    [
+      [-22.76, -32.57],
+      [-18.62, -33.86],
+      [-18.97, -43.01],
+      [-21.82, -42.73],
+      [-22.76, -32.57]
+    ],
+    [
+      [-31.68, -0.44],
+      [-21.56, 1.72],
+      [-30.21, 0.01],
+      [-31.68, -0.44],
+      [-33.81, -6.39],
+      [-27.76, -10.95],
+      [-24.83, -31.46],
+      [-18.53, -33.44],
+      [-16.97, -29.12],
+      [-15.77, -4.04]
+    ],
+    [
+      [-31.95, 46.0],
+      [-20.56, 46.18],
+      [-18.37, 37.83],
+      [-20.53, 1.31],
+      [-21.42, 2.19],
+      [-30.07, 0.47999999999999998],
+      [-34.34, 38.41],
+      [-31.95, 46.0]
+    ]
+  ]
+  
+  const rawDrawingSize = 100
+  
+  const svgSize = 600
+  const svgPadding = 50
+  const svgInnerSize = svgSize - 2 * svgPadding
+  
+  function Drawing(props) {
+    return (
+      <svg width={svgSize} height={svgSize}>
+        <g transform={`translate(${svgPadding} ${svgPadding})`}>
+          <g transform={`translate(${svgInnerSize / 2} ${svgInnerSize / 2}) scale(${svgInnerSize / rawDrawingSize}) rotate(180)`}>
+            <PolygonGroup
+              fill={colors.red}
+              time={props.time}
+              polygons={pieces}
+              isAnimated={true}
+            />
+            <PolygonGroup
+              fill={colors.blue}
+              polygons={wholes}
+            />
+          </g>
+        </g>
+      </svg>
+    )
+  }
+  
+  function PolygonGroup(props) {
+    const list = props.polygons.map((coordinates, i) => {
+      return <Polygon
+        {...props}
+        key={i}
+        coordinates={coordinates}
+      />
+    })
+    return (
+      <g>
+        {list}
+      </g>
+    )
+  }
+  
+  function Polygon(props) {
+    const {time} = props
+    const centroid = getCentroid(props.coordinates)
+    const animationFunction = props.isAnimated ? (point) => scatter(point, centroid, time) : (point) => (point)
+    const coordinateString = props.coordinates
+      .slice(1)
+      .map(animationFunction)
+      .map(point => [- point[0], point[1]])
+      .map(point => point.join(',')).join(' ')
+    return (
+      <g>
+        <polygon fill={props.fill} points={coordinateString}/>
+      </g>
+    )
+  }
+  
+  ReactDOM.render(<App/>, document.getElementById('app'))
