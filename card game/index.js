@@ -1203,3 +1203,460 @@ class App extends React.Component {
   }
   
   ReactDOM.render(<App/>, document.getElementById('app'))
+
+
+
+//   rusty React round 
+
+/**
+ * Game state object. Mutated by keyboard interactions.
+ */
+const gameState = {
+    acceptKeys: true,
+    lateralPosition: {
+      current: 0,
+      target: 0
+    },
+    verticalPosition: {
+      current: 1,
+      target: 1
+    }
+  }
+  
+  /**
+   * Vertex shader source.
+   */
+  const vertexShaderSource = `
+  uniform mat4 u_Perspective;
+  uniform mat4 u_Transform;
+  uniform vec3 u_LightDirection;
+  attribute vec4 a_Position;
+  attribute vec4 a_Normal;
+  attribute vec4 a_Color;
+  varying vec4 v_Color;
+  void main() {
+    vec4 lightDirection = normalize(vec4(u_LightDirection, 0.0));
+    gl_Position = u_Perspective * (u_Transform * a_Position);
+    float brightness = 0.55 - dot(lightDirection, normalize(a_Normal)) * 0.45;
+    v_Color = a_Color * brightness;
+  }
+  `
+  
+  /**
+   * Fragment shader source.
+   */
+  const fragmentShaderSource = `
+  precision mediump float;
+  varying vec4 v_Color;
+  void main() {
+    gl_FragColor = v_Color;
+  }
+  `
+  
+  // Entry point
+  ;(function main () {
+    let ticks = 0
+    const canvas = document.getElementById('webgl')
+    resize(canvas)
+    const gl = canvas.getContext('webgl')
+    createProgram(gl, vertexShaderSource, fragmentShaderSource)
+    setLight(gl)
+    setTransform(gl)
+    document.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('resize', resize.bind(this, canvas, gl))
+    function tick () {
+      ticks += 1
+      setPerspective(gl, ticks)
+      gl.clearColor(0, 0, 0, 0)
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+      animateLateralPosition()
+      drawShape(gl, moebius)
+      drawShape(gl, car, transformCar(
+        ticks / 50,
+        gameState.lateralPosition.current,
+        gameState.verticalPosition.current
+      ))
+      window.requestAnimationFrame(tick)
+    }
+    tick()
+  }())
+  
+  /**
+   * Compute car transform matrix.
+   * @param {float} angle - Angle around the Moebius strip, in Radians.
+   * @param {lateralPosition} - Normalized position along the width of the strip. Varies between +1 and -1.
+   * @param {verticalPosition} - Normalized vertical position, varying between -1 and +1. These two values correspond to the two sides of the strip as the vehicle ascends.
+   * @returns {Matrix4} transform - Transformation matrix.
+   */
+  function transformCar (angle, lateralPosition, verticalPosition) {
+    const rotZ = new Matrix4().setRotate(
+      (angle + Math.PI / 2) * 180 / Math.PI,
+      0,
+      0,
+      1
+    )
+    const rotX = new Matrix4().setRotate(
+      (-angle + Math.PI / 2) * 180 / Math.PI,
+      Math.cos(angle + Math.PI / 2),
+      Math.sin(angle + Math.PI / 2),
+      0
+    )
+    const translateXY = new Matrix4().setTranslate(
+      0.5 * Math.cos(angle),
+      0.5 * Math.sin(angle),
+      0
+    )
+    const translateZ = new Matrix4().setTranslate(0, 0, verticalPosition * 0.04)
+    const translateY = new Matrix4().setTranslate(
+      -lateralPosition * 0.10 * Math.sin(angle + Math.PI / 2),
+      lateralPosition * 0.10 * Math.cos(angle + Math.PI / 2),
+      0
+    )
+    const scale = new Matrix4().setScale(0.6, 0.6, 0.6)
+    return translateXY
+      .multiply(rotX)
+      .multiply(translateY)
+      .multiply(translateZ)
+      .multiply(rotZ)
+      .multiply(scale)
+  }
+  
+  /**
+   * Animate current position values toward the target ones.
+   */
+  function animateLateralPosition () {
+    if (gameState.lateralPosition.current < gameState.lateralPosition.target - 0.001) {
+      gameState.lateralPosition.current += 0.025
+    } else if (gameState.lateralPosition.current > gameState.lateralPosition.target + 0.001) {
+      gameState.lateralPosition.current -= 0.025
+    }
+    if (gameState.verticalPosition.current < gameState.verticalPosition.target - 0.001) {
+      gameState.verticalPosition.current += 0.05
+    } else if (gameState.verticalPosition.current > gameState.verticalPosition.target + 0.001) {
+      gameState.verticalPosition.current -= 0.05
+    }
+  }
+  
+  /**
+   * Handle key down event.
+   * @param {Object} e - Event object.
+   */
+  function handleKeyDown (e) {
+    if (!gameState.acceptKeys) {
+      return
+    }
+    gameState.acceptKeys = false
+    setTimeout(function () {
+      gameState.acceptKeys = true
+    }, 100)
+    const keyCode = e.keyCode
+    if (keyCode === 39) {
+      gameState.lateralPosition.target = Math.max(
+        gameState.lateralPosition.target - 0.5,
+        -1
+      )
+    } else if (keyCode === 37) {
+      gameState.lateralPosition.target = Math.min(
+        gameState.lateralPosition.target + 0.5,
+        1
+      )
+    } else if (keyCode === 40) {
+      gameState.verticalPosition.target = -gameState.verticalPosition.target
+    }
+  }
+  
+  /**
+   * Resize canvas
+   * @param {DOMElement} canvas - Canvas element.
+   * @param {Object} gl - WebGL rendering context.
+   */
+  function resize (canvas, gl) {
+    const w = Math.min(document.body.clientWidth, document.body.clientHeight)
+    canvas.height = w
+    canvas.width = w
+    if (gl) {
+      gl.viewport(0, 0, w, w)
+    }
+  }
+  
+  function setPerspective (gl, ticks) {
+    const perspectiveMatrix = new Matrix4()
+    perspectiveMatrix.setPerspective(24, 1, 1, 100)
+    perspectiveMatrix.lookAt(
+      3 * Math.sin(ticks / 300),
+      3 * Math.cos(ticks / 300),
+      1,
+      0, 0, 0, 0, 0, 1
+    )
+    const uPerspective = gl.getUniformLocation(gl.program, 'u_Perspective')
+    gl.uniformMatrix4fv(
+      uPerspective,
+      false,
+      perspectiveMatrix.elements
+    )
+  }
+  
+  function setTransform (gl, matrix) {
+    const uTransform = gl.getUniformLocation(gl.program, 'u_Transform')
+    gl.uniformMatrix4fv(
+      uTransform,
+      false,
+      (matrix && matrix.elements) || new Matrix4().elements
+    )
+  }
+  
+  function setLight (gl) {
+    const uLightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection')
+    gl.uniform3fv(uLightDirection, new Float32Array([0.2, 0.2, 1]))
+  }
+  
+  // Shapes
+  
+  /**
+   * Generate car shape.
+   * @returns {Object} shape - Shape coordinates.
+   */
+  function car () {
+    const triangles = [{
+      normal: [0.0, 0.0, 1.0],
+      coordinates: [
+        [-0.11705460018119969, 0.0012516894548989877, 0.0],
+        [-0.079654010181487933, 0.0012516894548989877, 0.0],
+        [-0.079654010181487933, 0.038652279454610743, 0.0]
+      ]
+    }, {
+      normal: [0.0, 0.0, 1.0],
+      coordinates: [
+        [-0.086133382962100699, -0.0085091607436833284, 0.0],
+        [-0.11325880186348414, -0.0085091607436833284, 0.0],
+        [-0.086133382962100699, -0.035634579645066763, 0.0]
+      ]
+    }, {
+      normal: [0.0, 0.0, 1.0],
+      coordinates: [
+        [-0.12077234892450511, -0.017377899162263791, 0.0],
+        [-0.1407723489245051, -0.017377899162263791, 0.0],
+        [-0.12077234892450511, -0.037377899162263785, 0.0]
+      ]
+    }, {
+      normal: [0.24253562503633297, 0.0, 0.97014250014533188],
+      coordinates: [
+        [0.029999999999999999, -0.050000000000000003, 0.01],
+        [0.070000000000000007, -0.050000000000000003, 0.0],
+        [0.070000000000000007, 0.050000000000000003, 0.0]
+      ]
+    }, {
+      normal: [0.0, 0.099503719020998915, 0.99503719020998915],
+      coordinates: [
+        [0.070000000000000007, 0.050000000000000003, 0.0],
+        [0.029999999999999999, 0.050000000000000003, 0.0],
+        [0.029999999999999999, -0.050000000000000003, 0.01]
+      ]
+    }, {
+      normal: [-0.097590007294853315, 0.19518001458970663, 0.97590007294853309],
+      coordinates: [
+        [-0.070000000000000007, -0.050000000000000003, 0.0],
+        [0.029999999999999999, -0.050000000000000003, 0.01],
+        [-0.02, 0.0, -0.0050000000000000001]
+      ]
+    }, {
+      normal: [0.099503719020998915, 0.0, 0.99503719020998915],
+      coordinates: [
+        [-0.070000000000000007, 0.050000000000000003, 0.0],
+        [-0.070000000000000007, -0.050000000000000003, 0.0],
+        [-0.02, 0.0, -0.0050000000000000001]
+      ]
+    }, {
+      normal: [0.0, -0.099503719020998915, 0.99503719020998915],
+      coordinates: [
+        [-0.070000000000000007, 0.050000000000000003, 0.0],
+        [-0.02, 0.0, -0.0050000000000000001],
+        [0.029999999999999999, 0.050000000000000003, 0.0]
+      ]
+    }, {
+      normal: [-0.19518001458970663, 0.097590007294853315, 0.97590007294853309],
+      coordinates: [
+        [-0.02, 0.0, -0.0050000000000000001],
+        [0.029999999999999999, -0.050000000000000003, 0.01],
+        [0.029999999999999999, 0.050000000000000003, 0.0]
+      ]
+    }]
+    let vertices = []
+    for (let triangle of triangles) {
+      for (let pt of triangle.coordinates) {
+        let triangleVertices = []
+        triangleVertices = triangleVertices.concat(pt)
+        triangleVertices = triangleVertices.concat(triangle.normal)
+        triangleVertices = triangleVertices.concat([0.05, 0.05, 0.9, 1.0])
+        vertices = vertices.concat(triangleVertices)
+      }
+    }
+    return {
+      vertices: new Float32Array(vertices)
+    }
+  }
+  
+  /**
+   * Create moebius shape
+   * @returns {Object} shape - Moebius shape.
+   */
+  function moebius () {
+    const n = 161
+    let vertices = []
+    let connectivity = []
+    const radius = 0.5
+    const width = 0.25
+    const color = [0.9, 0.9, 0.9, 0.6]
+    for (let i = 0; i < n; i += 1) {
+      let angle = 2 * Math.PI / (n - 3) * i
+      let sinAngle = Math.sin(angle)
+      let cosAngle = Math.cos(angle)
+      let projectedRadius = (i % 2 === 0)
+        ? (radius - (width / 2 * sinAngle))
+        : (radius + (width / 2 * sinAngle))
+      let normal = [
+        sinAngle * cosAngle,
+        sinAngle * sinAngle,
+        cosAngle
+      ]
+      let position = [
+        projectedRadius * cosAngle,
+        projectedRadius * sinAngle,
+        ((i % 2 === 0) ? 1 : -1) * width / 2 * cosAngle
+      ]
+      vertices = vertices.concat([
+        position[0], position[1], position[2],
+        normal[0], normal[1], normal[2],
+        color[0], color[1], color[2], color[3]
+      ])
+      if (i > 1) {
+        connectivity = connectivity.concat([i - 2, i - 1, i])
+      }
+    }
+    return {
+      vertices: new Float32Array(vertices),
+      connectivity: new Uint8Array(connectivity)
+    }
+  }
+  
+  /**
+   * Draw a shape
+   * @param {Object} gl - WebGL rendering context.
+   * @param {Function} shapeConstructor - A function returning a shape object.
+   * @param {Matrix4} transform - Base transform for the shape. Replaces current transform uniform value in the vertex shader.
+   */
+  function drawShape (gl, shapeConstructor, transform) {
+    setTransform(gl, transform)
+    const shape = shapeConstructor()
+    const vertexBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
+    gl.bufferData(gl.ARRAY_BUFFER, shape.vertices, gl.STATIC_DRAW)
+  
+    const FSIZE = shape.vertices.BYTES_PER_ELEMENT
+  
+    const aPosition = gl.getAttribLocation(gl.program, 'a_Position')
+    if (aPosition < 0) {
+      console.log('Failed to get storage location for a_Position.')
+    }
+    gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, FSIZE * 10, 0)
+    gl.enableVertexAttribArray(aPosition)
+  
+    const aNormal = gl.getAttribLocation(gl.program, 'a_Normal')
+    if (aNormal < 0) {
+      console.log('Failed to get storage location for a_Normal.')
+    }
+    gl.vertexAttribPointer(aNormal, 3, gl.FLOAT, false, FSIZE * 10, FSIZE * 3)
+    gl.enableVertexAttribArray(aNormal)
+  
+    const aColor = gl.getAttribLocation(gl.program, 'a_Color')
+    if (aColor < 0) {
+      console.log('Failed to get storage location for a_Color.')
+    }
+    gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, FSIZE * 10, FSIZE * 7)
+    gl.enableVertexAttribArray(aColor)
+  
+    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+  
+    if (shape.connectivity) {
+      const indexBuffer = gl.createBuffer()
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer)
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.connectivity, gl.STATIC_DRAW)
+      gl.drawElements(gl.TRIANGLES, shape.connectivity.length, gl.UNSIGNED_BYTE, 0)
+    } else {
+      gl.drawArrays(gl.TRIANGLES, 0, shape.vertices.length / 10)
+    }
+  }
+  
+  // WebGL utilities
+  
+  /**
+   * Load a single shader.
+   * @param {Object} gl - WebGL rendering context.
+   * @param {number} type - Shader type, as a constate parameter gl.VERTEX_SHADER or gl.FRAGMENT_SHADER.
+   * @param {String} source - Shader source code.
+   * @returns {Object} shader - Shader.
+   */
+  function loadShader (gl, type, source) {
+    const shader = gl.createShader(type)
+    gl.shaderSource(shader, source)
+    gl.compileShader(shader)
+    const compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
+    if (!compiled) {
+      let error = gl.getShaderInfoLog(shader)
+      console.log('Failed to compile shader: ' + error)
+      gl.deleteShader(shader)
+      return null
+    }
+    return shader
+  }
+  
+  /**
+   * Initialize shaders
+   * @param {Object} gl - WebGL rendering context.
+   * @param {String} vShader - Vertex shader source code.
+   * @param {String} fShader - Fragment shader source code.
+   * @returns {Bool} success - Returns whether the initialization was successful.
+   */
+  function createProgram (gl, vShader, fFhader) {
+    // Create shader object
+    const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vShader)
+    const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fFhader)
+    if (!vertexShader || !fragmentShader) {
+      return null
+    }
+  
+    // Create a program object
+    const program = gl.createProgram()
+    if (!program) {
+      return null
+    }
+  
+    // Attach the shader objects
+    gl.attachShader(program, vertexShader)
+    gl.attachShader(program, fragmentShader)
+  
+    // Link the program object
+    gl.linkProgram(program)
+  
+    gl.enable(gl.DEPTH_TEST)
+  
+    // Check the result of linking
+    const linked = gl.getProgramParameter(program, gl.LINK_STATUS)
+    if (!linked) {
+      let error = gl.getProgramInfoLog(program)
+      console.log('Failed to link program: ' + error)
+      gl.deleteProgram(program)
+      gl.deleteShader(fragmentShader)
+      gl.deleteShader(vertexShader)
+      return null
+    }
+   
+    if (!program) {
+      console.log('Failed to create program')
+      return false
+    }
+    gl.useProgram(program)
+    gl.program = program
+    return program
+  }
+  
