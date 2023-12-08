@@ -766,3 +766,255 @@ function TopCardList() {
 }
 
 export default TopCardList
+
+import React, { Component } from 'react';
+import Routes from './CityRoutes';
+import logo from './Components/Images/headout.png';
+
+class App extends Component {
+  state = { width: 0, height: 0 };
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  updateWindowDimensions = () =>
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+
+  render() {
+    const { width } = this.state;
+    const mobileTablet = width <= 1100;
+
+    if (mobileTablet) {
+      return (
+        <div className="mobile-tablet">
+          <img src={logo} alt="Headout" />
+          <p>
+            Currently, we're not supporting Mobile & Tablets{' '}
+            <span role="img" aria-label="Warn">
+              🙏
+            </span>
+          </p>
+        </div>
+      );
+    } else {
+      return <Routes />;
+    }
+  }
+}
+
+export default App;
+
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import MainHome from './Components/MainHome';
+import NewYork from './Components/NewYork';
+import AppStore from './Components/AppStore';
+
+const CityRoutes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={MainHome} />
+      <Route exact path="/cities/new-york" component={NewYork} />
+      <Route exact path="/cities/las-vegas" component={MainHome} />
+      <Route exact path="/cities/rome" component={MainHome} />
+      <Route exact path="/cities/paris" component={MainHome} />
+      <Route exact path="/cities/london" component={MainHome} />
+      <Route exact path="/cities/dubai" component={MainHome} />
+      <Route exact path="/cities/barcelona" component={MainHome} />
+      <Route exact path="/cities/madrid" component={MainHome} />
+      <Route exact path="/cities/singapore" component={MainHome} />
+      <Route exact path="/cities/venice" component={MainHome} />
+      <Route exact path="/cities/milan" component={MainHome} />
+      <Route exact path="/cities/naples" component={MainHome} />
+      <Route exact path="/cities/budapest" component={MainHome} />
+      <Route exact path="/cities/edinburg" component={MainHome} />
+      <Route exact path="/cities/florence" component={MainHome} />
+      <Route exact path="/app" component={AppStore} />
+    </Switch>
+  </BrowserRouter>
+);
+
+export default CityRoutes;
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+// This optional code is used to register a service worker.
+// register() is not called by default.
+
+// This lets the app load faster on subsequent visits in production, and gives
+// it offline capabilities. However, it also means that developers (and users)
+// will only see deployed updates on subsequent visits to a page, after all the
+// existing tabs open on the page have been closed, since previously cached
+// resources are updated in the background.
+
+// To learn more about the benefits of this model and instructions on how to
+// opt-in, read http://bit.ly/CRA-PWA
+
+const isLocalhost = Boolean(
+    window.location.hostname === 'localhost' ||
+      // [::1] is the IPv6 localhost address.
+      window.location.hostname === '[::1]' ||
+      // 127.0.0.1/8 is considered localhost for IPv4.
+      window.location.hostname.match(
+        /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+      )
+  );
+  
+  export function register(config) {
+    if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+      // The URL constructor is available in all browsers that support SW.
+      const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+      if (publicUrl.origin !== window.location.origin) {
+        // Our service worker won't work if PUBLIC_URL is on a different origin
+        // from what our page is served on. This might happen if a CDN is used to
+        // serve assets; see https://github.com/facebook/create-react-app/issues/2374
+        return;
+      }
+  
+      window.addEventListener('load', () => {
+        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+  
+        if (isLocalhost) {
+          // This is running on localhost. Let's check if a service worker still exists or not.
+          checkValidServiceWorker(swUrl, config);
+  
+          // Add some additional logging to localhost, pointing developers to the
+          // service worker/PWA documentation.
+          navigator.serviceWorker.ready.then(() => {
+            console.log(
+              'This web app is being served cache-first by a service ' +
+                'worker. To learn more, visit http://bit.ly/CRA-PWA'
+            );
+          });
+        } else {
+          // Is not localhost. Just register service worker
+          registerValidSW(swUrl, config);
+        }
+      });
+    }
+  }
+  
+  function registerValidSW(swUrl, config) {
+    navigator.serviceWorker
+      .register(swUrl)
+      .then(registration => {
+        registration.onupdatefound = () => {
+          const installingWorker = registration.installing;
+          if (installingWorker == null) {
+            return;
+          }
+          installingWorker.onstatechange = () => {
+            if (installingWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // At this point, the updated precached content has been fetched,
+                // but the previous service worker will still serve the older
+                // content until all client tabs are closed.
+                console.log(
+                  'New content is available and will be used when all ' +
+                    'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
+                );
+  
+                // Execute callback
+                if (config && config.onUpdate) {
+                  config.onUpdate(registration);
+                }
+              } else {
+                // At this point, everything has been precached.
+                // It's the perfect time to display a
+                // "Content is cached for offline use." message.
+                console.log('Content is cached for offline use.');
+  
+                // Execute callback
+                if (config && config.onSuccess) {
+                  config.onSuccess(registration);
+                }
+              }
+            }
+          };
+        };
+      })
+      .catch(error => {
+        console.error('Error during service worker registration:', error);
+      });
+  }
+  
+  function checkValidServiceWorker(swUrl, config) {
+    // Check if the service worker can be found. If it can't reload the page.
+    fetch(swUrl)
+      .then(response => {
+        // Ensure service worker exists, and that we really are getting a JS file.
+        const contentType = response.headers.get('content-type');
+        if (
+          response.status === 404 ||
+          (contentType != null && contentType.indexOf('javascript') === -1)
+        ) {
+          // No service worker found. Probably a different app. Reload the page.
+          navigator.serviceWorker.ready.then(registration => {
+            registration.unregister().then(() => {
+              window.location.reload();
+            });
+          });
+        } else {
+          // Service worker found. Proceed as normal.
+          registerValidSW(swUrl, config);
+        }
+      })
+      .catch(() => {
+        console.log(
+          'No internet connection found. App is running in offline mode.'
+        );
+      });
+  }
+  
+  export function unregister() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(registration => {
+        registration.unregister();
+      });
+    }
+  }
+
+  import React from 'react';
+import './Styles/arrow.css';
+
+export const Left = props => {
+  const { style, onClick } = props;
+  return (
+    <div
+      className="slick-arrow-left"
+      style={{ ...style, display: 'block' }}
+      onClick={onClick}
+    >
+      <i className="fas fa-arrow-left left-arrow" />
+    </div>
+  );
+};
+
+export const Right = props => {
+  const { style, onClick } = props;
+  return (
+    <div
+      className="slick-arrow-right"
+      style={{ ...style, display: 'block' }}
+      onClick={onClick}
+    >
+      <i className="fas fa-arrow-right right-arrow" />
+    </div>
+  );
+};
