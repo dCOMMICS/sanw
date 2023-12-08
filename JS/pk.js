@@ -4233,3 +4233,8 @@ function handleCellClick(clickedCellEvent) {
             */
                 handlePlayerChange();
             }
+
+            function handlePlayerChange() {
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                statusDisplay.innerHTML = currentPlayerTurn();
+            }
