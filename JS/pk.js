@@ -3635,3 +3635,417 @@ window.onload = function() {
     ui_input.command.focus()
 }
 // There is nothing more here, sowwy.
+
+
+
+
+
+
+
+
+
+/*
+ *> Coded by Thomas Hj
+ *> 20.11.2020
+ *> 0.77
+ * 
+ */
+
+ let menuObj
+
+ // User profile storage.
+ const user = {
+     name: 'Thomas Hj',
+     title: 'Web / Java developer',
+     tagName: 'DEV',
+     xp: 11427,
+     db: {
+         courses: [
+             ['Angular + NestJS', 0,  45,    0,          0,        ''],
+             ['React + Redux',    0,  23,    0,          0,        ''],
+             ['DS with Python',   3,  35,   29,          0,        ''],
+             ['Machine Learning', 0,  48,    0,          0,        ''],
+             ['C',                46, 46,  259, 1541894400,     'com'],
+             ['C++',              80, 80,  411, 1496102400,     'com'],
+             ['C#',               72, 72,  348, 1496102400,     'com'],
+             ['Swift 4',          53, 53,  273, 1496102400,     'app'],
+             ['Ruby',             57, 57,  294, 1496016000,     'wea'],
+             ['jQuery',           26, 26,  168, 1483315200,     'wfd'],
+             ['Python 3',         94, 94,  400, 1481760000,     'wea'],
+             ['Java',             65, 65,  376, 1479945600, 'com wea'],
+             ['SQL',              27, 27,  176, 1479340800,     'bwd'],
+             ['PHP',              51, 51,  282, 1479340800,     'bwd'],
+             ['CSS',              76, 76,  389, 1479254400,     'wfd'],
+             ['HTML',             44, 44,  257, 1479254400,     'wfd'],
+             ['JavaScript',       59, 59, 1868, 1500595200,     'wfd']
+         ],
+         codes: [
+             ['My Page',                                                'web',  0, 1605830400,             '', 'SwA5gaC',     ''],
+             ['Gradient Animation',                                     'web',  0, 1552780800, 'WRR0cApbve1q', 'swvScme',     ''],
+             ['#GoDataGo',                                              'web',  0, 1552608000, 'Wqae846YBuON', 'aO2Khzj',     ''],
+             ['Python while loop (Animation)',                          'web',  0, 1552262400, 'WZAL7AWXfazp', 'HEhxNOj',     ''],
+             ['Movie Countdown',                                        'web',  0, 1543449600, 'W8FuZD7OCSk4', 'Dbhs4kP',     ''],
+             ['Thomas Hj - Terminal (6 Games)',                         'web',  0, 1542153600, 'W6J2oSwjgf1S', 'GXX3tVH',     ''],
+             ['JS-Filters: For Loop, ForEach, Filter & Arrow function', 'web',  0, 1518307200, 'WGv556ERc56U', 'NJCyLKA', '#fff'],
+             ['3D Cube v2',                                             'web',  0, 1506470400, 'W1kO5W2haUff', 'ENOHxJY', '#fff'],
+             ['Shuffle Text',                                           'web',  0, 1506124800, 'WEIYt2spCVr5', '4F6ff4n',     ''],
+             ['Spawn Text Characters (Mini Game)',                      'web',  0, 1505001600, 'WXbrLAGjrFac', '4A8cw8s',     ''],
+             ['Rainbow (Text-Shadow)',                                  'web',  0, 1503878400, 'W7niieql94eJ', 'r3I9QMl',     ''],
+             ['JavaScript - Button Slide',                              'web',  0, 1503619200, 'WtwcBJjLI7Rv', 'RpiXROp',     ''],
+             ['Text-Shadow',                                            'web',  0, 1503532800, 'WM537MOIH4Ip', '9Rdguqw',     ''],
+             ['Analog Clock - Intro Animation (Original)',              'web',  0, 1498953600, 'W9NRGxeDd3i6', 'rsvPM2H',     ''],
+             ['Text Digital Clock',                                     'web',  0, 1498867200, 'WmFpZ7MGiN1A', 'svp1SJM',     ''],
+             ['CSS3: Linear-Gradient Animation',                        'web',  0, 1498262400, 'W0pByMYG2PPL', 'wyCua1x',     ''],
+             ['Thomas Hj - Code List',                                  'web',  0, 1497484800, 'WUlqWFpxoh6I', 'IOQnATh',     ''],
+             ['IPv4 Subnet Calculator',                                 'web',  0, 1497052800,             '', '6NdeX3g',     ''],
+             ['Text-based Clock',                                       'web',  0, 1496880000, 'WA1xw7W1SaXm', 'AsDp4nj',     ''],
+             ['Blinking Text',                                          'web',  0, 1492646400, 'WYvDN0aVce0a', 'wRYaBh5', '#fff'],
+             ['Zelda - Ocarina of Time - Master Sword',                 'web',  0, 1486080000, 'WXwM7TXuaPwS', 'r52n0QD',     ''],
+             ['Javascript Date -> Get Methods',                         'web',  0, 1483401600, 'Wkpmg7y9xHoz', 'MgYqG0b', '#fff'],
+             ['Merry Christmas',                                        'web',  0, 1481500800, 'WBsNTPTDCRo7', 'nxUb2oK',     ''],
+             ['Vibrate',                                                'web',  0, 1481068801, 'WWfy1FSZ7pM0', 'Pj2z2Ay', '#fff'],
+             ['Minecraft Block',                                        'web',  0, 1481068800, 'WbiYyJSH0VX7', 'SnteERH', '#ccc'],
+             ['LED Board',                                              'web',  0, 1480118400, 'WnID9ak7ZNJ1', 'hppINsn',     ''],
+             ['XML to Text',                                            'web',  0, 1480118400, 'WJYGO1c1dQaw', 'Uge1KWg', '#fff'],
+             ['Battery',                                                'web',  0, 1480032000, 'W3B0T9w6S142', 'nHBwyI9', '#fff'],
+             ['List of Unicode characters',                             'web',  0, 1479686401, 'Wr5uQn2OZh74', 'tY3nKB7',     ''],
+             ['Convert letter to Numeral System',                       'web',  0, 1479686400, 'WCue37iVpE2f', 'mugP5k4',     ''],
+             ['Different hash algorithm in PHP',                        'php',  0, 1479427200, 'wYLAv41iZVF9', 'QRcfWTU',     ''],
+             ['Chess Clock',                                            'web',  0, 1479168000, 'WBBC4dpYZs3y', 'Sk4js6r',     ''],
+             ['Loading Animation',                                      'web',  0, 1478908800, 'WrFmru5PQ338', 'nVrGEHa',     ''],
+             ['!Show All Variables / Functions in Javascript',          'web',  0, 1478563200,             '', '3lf6hM0',     ''],
+             ['Convert Text to Binary',                                 'web',  0, 1478217600, 'Wq92JCYyr735', 'OHjxjJO', '#fff'],
+             ['Terminal',                                               'web',  0, 1478044800, 'W9ggJwNFl88v', 'zxCCKYG',     ''],
+             ['Bubble Level (Only works for phone user)',               'web',  0, 1477958400,             '', 'vizo1cw',     ''],
+             ['Hangman (Game)',                                         'web',  0, 1477872000, 'WyyBylG1NvdU', 'PPxzqXe', '#fff'],
+             ['3D Cube',                                                'web',  0, 1477699200, 'WFn79u7U1ckX', '6MOaQjE', '#fff'],
+             ['Online / Offline Event',                                 'web',  0, 1477612802, 'WR2qwBY7j9p6', 'vP0tx2b',     ''],
+             ['Pointless Button',                                       'web',  0, 1477612801, 'WneUQspspCn8', 'SCPQ7s2', '#fff'],
+             ['Moving Block By Phone Movement',                         'web',  0, 1477612800,             '', 'CrLq8zx', '#fff'],
+             ['Clubs',                                                  'web',  0, 1477526401, 'WUCHMnrdKD03', 'NgdT7QA', '#fff'],
+             ['Spades',                                                 'web',  0, 1477526400, 'WFtYMucNBcuG', 'U0Lpraa', '#fff'],
+             ['Country Flags',                                          'web',  0, 1477180800, 'WQkX0T3VrVi3', '3irODfu', '#fff'],
+             ['Card Spinner (Heart | Diamond) (Loader)',                'web',  0, 1477008001, 'WSj4116dTAzU', 'oOBws9C',     ''],
+             ['Card Spinner (Heart)',                                   'web',  0, 1477008000, 'WgtJ4ue187mN', 'SP5gnow',     ''],
+             ['Happy Halloween!',                                       'web',  0, 1476835200, 'W8NUszbBvrJw', 'JCK4pGq',     ''],
+             ['Simple Analog Clock',                                    'web',  0, 1476748801, 'WeIu905urn4Q', 'nma5I1s',     ''],
+             ['Simple Calendar',                                        'web',  0, 1476748800, 'WY1yFJYLQsya', 'dRqzgoK',     ''],
+             ['Calculator',                                             'web',  0, 1476576000, 'WxRbhos0KLHI', 'GMcJTPX',     ''],
+             ['!Heart > Broken Heart',                                  'web',  0, 1476489601,             '', 'vfZHYBz',     ''],
+             ['Heart',                                                  'web',  0, 1476489600, 'W76Jxj27m86U', 'B3RGywm',     ''],
+             ['Binary Clock v2',                                        'web',  0, 1476403200, 'W2w5E3WA5uMf', 'AwsdoBu',     ''],
+             ['How Secure Is My Password',                              'web',  0, 1476230400, 'W86RxPNJMfI7', 'fCZE2Lg',     ''],
+             ['Random Background Color',                                'web',  0, 1476057600, 'W2a5IM1VovIp', '8k7rwtF',     ''],
+             ['Math Test',                                              'web',  0, 1475884800, 'WkPRLklZGA5N', 'oG5Y5i8',     ''],
+             ['Stop Watch',                                             'web',  0, 1475798401, 'WvI7zXux8fRV', '4G4f3xH', '#fff'],
+             ['Base64 - Encode / Decode',                               'web',  0, 1475798400, 'Wj5iAHT9NUNv', 'vROo4u7', '#fff'],
+             ['Dj Launchpad',                                           'web',  0, 1475712000, 'WtbxUOxVTq1f', '1LoKyY8',     ''],
+             ['Pokéball',                                               'web',  0, 1475539200, 'W6sL3zo5yY68', 'y7iek3e', '#fff'],
+             ['Code Generator',                                         'web',  0, 1475452801, 'WM4UzTf0PlD7', 'D9ot45a',     ''],
+             ['Password Generator',                                     'web',  0, 1475452800, 'W7STLYiPdJ4q', 'sTvHhPG',     ''],
+             ['Notepad Note',                                           'web',  0, 1475280000, 'W2CXFYL61ykl', 'CWOIzST', '#fff'],
+             ['Analog Clock (CSS)',                                     'web',  0, 1475193602, 'W5skwVZ6A1Wu', 'vdTzdhI',     ''],
+             ['Traffic Light',                                          'web', 10, 1475193601, 'WsMPnVsbdeSq', '7dvQEjS',     ''],
+             ['Binary Clock',                                           'web', 21, 1475193600, 'Wp8K12LEcpbw', 'TDPeNup',     ''],
+             ['Calendar',                                               'web', 15, 1475107201, 'WBlPTfQ2hE77', 'unnpU6t',     ''],
+             ['Digital Clock',                                          'web', 29, 1475107200, 'WIXCX7brmxFA', 'x1nVC9e',     '']
+         ]
+     }
+ }
+ 
+ // SoloLearn functions.
+ const sololearn = {
+     levels: [
+         0, 50, 150, 300, 500, 1000, 2000, 3000, 4000, 
+         5000, 6500, 8000, 10000, 13000, 15000, 20000, 
+         100000, 500000, 750000, 1000000
+     ],
+     getLevelStatus: (num) => {
+         let lvl = -1
+         let progress = 0
+         
+         for(let i = 0; i < sololearn.levels.length; i++) {
+             if(num < sololearn.levels[i]) {
+                 lvl = i
+                 break;
+             }
+         }
+         
+         if(lvl === -1) {
+             lvl = sololearn.levels.length
+             progress = 100
+         } else {
+             let min = sololearn.levels[lvl - 1]
+             let max = sololearn.levels[lvl]
+             progress = (num - min) * 100 / (max - min)
+         }
+         
+         return {lvl: lvl, progress: progress}
+     }
+ }
+ 
+ // System function.
+ const sys = {
+     buildCodes: (data, page, title, filter, limit, pageNr) => {
+         data.forEach(e => {
+             let el1 = $.new('div')
+             let el2 = $.new('div')
+             let el3 = $.new('div')
+             let sp1 = $.new('span')
+             let sp2 = $.new('span')
+             
+             el1.className = 'code'
+             el2.className = 'code-bg'
+             el2.style.backgroundColor = e[6] === '' ? '#000' : e[6]
+             el2.style.backgroundImage = 'url(' + lib.imgur(e[5]) + ')'
+             el3.className = 'code-label'
+             sp2.className = 'code-tag'
+             sp1.innerText = e[0]
+             sp2.innerText = e[1]
+             
+             el3.appendChild(sp1)
+             el3.appendChild(sp2)
+             el1.appendChild(el2)
+             el1.appendChild(el3)
+             uPage.appendChild(el1)
+         })
+         if(pageNr === undefined) {
+             return
+         }
+         let el1 = $.new('div')
+         el1.className = 'page-index'
+         if(pageNr > 0) {
+             let sp1 = $.new('span')
+             sp1.onclick = function() {
+                 sys.pageLoad(page, filter, limit, title, pageNr - 1)
+             }
+             sp1.innerText = 'Previous Page'
+             el1.appendChild(sp1)
+         }
+         if(sys.getCodes(filter, 0).length > limit * (pageNr + 1)) {
+             let sp1 = $.new('span')
+             sp1.onclick = function() {
+                 sys.pageLoad(page, filter, limit, title, pageNr + 1)
+             }
+             sp1.innerText = 'Next Page'
+             el1.appendChild(sp1)
+         }
+         uPage.appendChild(el1)
+     },
+     buildCourses: (data) => {
+         data.forEach(e => {
+             let el1 = $.new('div')
+             let el2 = $.new('div')
+             let el3 = $.new('div')
+             let sp1 = $.new('span')
+             let sp2 = $.new('span')
+             
+             el1.className = 'row-bar'
+             el2.className = 'row-progress'
+             el2.style.width = (e[1] * 100 / e[2]) + '%'
+             el3.className = 'row-label'
+             sp1.innerText = e[0]
+             if(e[1] !== e[2]) {
+                 sp2.className = 'tag-work'
+                 sp2.innerText = lib.num(e[2] - e[1]) + ' Task left'
+             } else {
+                 sp2.className = 'tag-done'
+                 sp2.innerText = lib.num(e[3]) + ' XP'
+             }
+             el3.appendChild(sp1)
+             el3.appendChild(sp2)
+             el1.appendChild(el2)
+             el1.appendChild(el3)
+             uPage.appendChild(el1)
+         })
+         
+     },
+     buildHeader: (titles) => {
+         let div = $.new('div')
+         div.className = 'header'
+         if(Array.isArray(titles)) {
+             let select = $.new('select')
+             for(let i = 0; i < titles.length; i++) {
+                 let option = $.new('option')
+                 let title = titles[i].split('|')
+                 option = $.new('option')
+                 option.innerText = title[0]
+                 option.value = title[1]
+                 select.appendChild(option)
+             }
+             div.appendChild(select)
+         } else {
+             let span = $.new('span')
+             span.innerText = titles
+             div.appendChild(span)
+         }
+         uPage.appendChild(div)
+     },
+     getCodes: (filter, limit, offset) => {
+         let result = user.db.codes.slice()
+         switch(filter) {
+             case 'OLD':
+                 result.sort((a, b) => a[3] - b[3])
+                 break;
+             
+             default:
+                 result.sort((a, b) => b[3] - a[3])
+                 break;
+         }
+         return limit === 0 ? result : result.slice(offset, limit)
+     },
+     getCourses: (filter, limit, offset) => {
+         let result = user.db.courses.slice()
+         switch(filter) {
+             case 'DONE':
+                 result = result.filter(e => e[1] === e[2])
+                 result.sort((a, b) => b[3] - a[3])
+                 break;
+             
+             case 'NOT_DONE':
+                 result = result.filter(e => e[1] !== e[2])
+                 result.sort((a, b) => b[1] - a[1])
+                 break;
+             
+             default:
+                 result.sort((a, b) => b[3] - a[3])
+                 break;
+         }
+         return limit === 0 ? result : result.slice(offset, limit)
+     },
+     pageLoad: (page, filter, limit, title, pageNr) => {
+         let data
+         uPage.innerHTML = ''
+         window.scrollTo(0,0);
+         
+         switch(parseInt(page)) {
+             case 1:
+                 filter = filter === undefined ? '' : filter
+                 limit = limit === undefined ? 10 : limit
+                 title = title === undefined ? 'Latest work' : title
+                 pageNr = pageNr === undefined ? 0 : pageNr
+                 data = sys.getCodes(filter, limit + (pageNr * limit), (pageNr * limit))
+                 sys.buildHeader(title)
+                 sys.buildCodes(data, page, title, filter, limit, pageNr)
+                 return
+             
+             case 2:
+                 data = sys.getCourses('NOT_DONE', 0, 0)
+                 if(data.length !== 0) {
+                     sys.buildHeader('In progress')
+                     sys.buildCourses(data)
+                 }
+                 data = sys.getCourses('DONE', 0, 0)
+                 sys.buildHeader('Top courses')
+                 sys.buildCourses(data)
+                 return
+             
+             default:
+                 data = sys.getCourses('NOT_DONE', 3, 0)
+                 if(data.length !== 0) {
+                     sys.buildHeader('In progress')
+                     sys.buildCourses(data)
+                 }
+                 data = sys.getCodes('', 3, 0)
+                 sys.buildHeader('Latest work')
+                 sys.buildCodes(data)
+                 data = sys.getCourses('DONE', 3, 0)
+                 sys.buildHeader('Top courses')
+                 sys.buildCourses(data)
+                 return
+         }
+     }
+ }
+ 
+ // HTML shortcuts.
+ const $ = {
+     get: (id, attr) => {
+         return id.getAttribute(attr)
+     },
+     has: (id, attr) => {
+         return id.hasAttribute(attr)
+     },
+     new: (element) => {
+         return document.createElement(element)
+     },
+     query: (search) => {
+         return [...document.querySelectorAll(search)]
+     },
+     rm: (id, attr) => {
+         id.removeAttribute(attr)
+     },
+     set: (id, attr, value) => {
+         id.setAttribute(attr, value)
+     },
+     txt: (id, txt) => {
+         id.innerText = txt
+     }
+ }
+ 
+ // Custom libary.
+ const lib = {
+     img: (imgs) => {
+         if(imgs.length === 0) {
+             return
+         }
+         
+         let img = imgs.shift()
+         
+         img.onload = function() {
+             $.rm(img, 'data-img')
+             img.onload = null
+             img.onerror = null
+             lib.img(imgs)
+         }
+         img.onerror = img.onload
+         img.src = $.get(img, 'data-img')
+     },
+     imgur: (code) => {
+         return 'https://i.imgur.com/' + (code === '' ? '0FiHZPd' : code) + '.jpg'
+     },
+     num: (num) => {
+         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+     }
+ }
+ 
+ // Trigger when the user click on the webpage.
+ window.onclick = function(event) {
+     let obj = event.target
+     
+     if(!$.has(obj, 'a')) {
+         return
+     }
+     
+     if(obj.className === 'active tap') {
+         return
+     }
+     
+     menuObj.className = 'tab'
+     obj.className = 'active tap'
+     menuObj = obj
+     sys.pageLoad($.get(menuObj, 'a'))
+ }
+ 
+ // Trigger when the webpage is done loading.
+ window.onload = function() {
+     let stats = sololearn.getLevelStatus(user.xp)
+     
+     $.set(uImg, 'data-img', 'https://blob.sololearn.com/avatars/74ceb199-991b-4376-b409-01a94d83ba84.jpg')
+     $.txt(uName, user.name)
+     $.txt(uTitle, user.title)
+     $.txt(uXp, lib.num(user.xp) + ' XP')
+     $.txt(uLvl, 'LVL ' + stats.lvl)
+     $.set(uBar, 'style', 'width: ' + stats.progress + '%')
+     $.txt(uTag, user.tagName)
+     
+     for(let i = 0; i < uMenu.children.length; i++) {
+         if(uMenu.children[0].className === 'active tap') {
+             menuObj = uMenu.children[i]
+             break;
+         }
+     }
+     
+     sys.pageLoad($.get(menuObj, 'a'))
+     lib.img($.query('img[data-img]'))
+ }
+ 
