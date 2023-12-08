@@ -4144,3 +4144,13 @@ function handleCellClick(clickedCellEvent) {
     */    
         handleCellPlayed(clickedCell, clickedCellIndex);
         handleResultValidation();
+
+
+        function handleCellPlayed(clickedCell, clickedCellIndex) {
+            /*
+            We update our internal game state to reflect the played move, 
+            as well as update the user interface to reflect the played move
+            */
+                gameState[clickedCellIndex] = currentPlayer;
+                clickedCell.innerHTML = currentPlayer;
+            }
