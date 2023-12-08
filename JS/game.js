@@ -410,3 +410,359 @@ const useDocumentTitle = (title) => {
 };
 
 export default useDocumentTitle;
+
+import React from 'react'
+import './styles/global.css';
+import Header from './components/Header.js'
+import TopCardList from './components/top-card-list.js'
+import Overview from './components/Overview.js'
+import Switch from './components/Switch.js'
+
+function App() {
+  return (
+    <>
+    <Header>
+      <Switch/>
+    </Header>
+    <TopCardList/>
+    <Overview/>
+    </>
+  );
+}
+
+export default App;
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(<App />,document.getElementById('root'));
+
+import React from 'react'
+import '../styles/Card-small.css'
+
+function CardSmall({growth, pageViews, icon}) {
+    return (
+        <div className="card-small">
+        <p className="card-small-views">page views</p>
+        <p className="card-small-icon">
+            <img src={icon} />
+        </p>
+        <p className="card-small-number">{pageViews}</p>
+        <p className="card-small-percentage">
+            <span>
+                <img src="images/up.png"/>
+                {growth}%
+            </span>
+         
+        </p>
+    </div>
+    )
+}
+
+export default CardSmall
+import React from 'react'
+import '../styles/card.css'
+
+
+
+function Card({userName,followers,todayFollowers, icon, name}) {
+    const cardClass = `card ${name}`
+    return (
+        <article className={cardClass}>
+            <p className="card-title">
+                <img src= {icon}/>
+                {userName}
+            </p>
+            <p className="card-followers">
+            <span className="card-followers-number">{followers}</span>
+                <span className="card-followers-title">Followers</span>
+            </p>
+            <p className="card-today">
+                <img src="images/up.png"/>
+                {todayFollowers} today
+            </p>
+        </article>
+    )
+}
+
+export default Card;
+import React from 'react'
+import '../styles/header.css'
+import './Switch.js'
+import Switch from './Switch.js'
+
+function Header({children}) {
+    return (
+        <header className="header" >
+     <div className="wrapper">
+      <div className="header-grid">
+        <div>
+          <h1>Social Media Dashboard</h1>
+          <p className="header-total">Total Followers: 23, 004</p>
+        </div>
+        {children}
+      </div>
+     </div>
+   </header>
+    )
+}
+
+export default Header
+import React from 'react'
+import CardSmall from './Card-small'
+import '../styles/overview.css'
+
+const cardSmallList = [
+    {
+        icon: 'images/facebook.png',
+        pageViews: '87',
+        growth: 3,
+        key: 1
+    },
+    {
+        icon: 'images/twitter.png',
+        pageViews: '52',
+        growth:  2257,
+        key: 2
+    },
+    {
+        icon: 'images/instagram24.png',
+        pageViews: '5462',
+        growth: 1375,
+        key: 3
+    },
+    {
+        icon: 'images/youtube.png',
+        pageViews: '117',
+        growth: 303,
+        key: 4
+    }
+]
+
+function Overview() {
+    return (
+        <section className="overview">
+        <div className="wrapper">
+          <h2>Overview - Today</h2>
+
+          <div className="grid">
+              {
+                  cardSmallList.map(({icon,pageViews, growth, key}) => (
+                  <CardSmall
+                    icon={icon}
+                    key={key}
+                    pageViews={pageViews}
+                    growth={growth}
+                  />
+                  ))
+              }
+           
+            {/* <div className="card-small">
+                <p className="card-small-views">Likes</p>
+                <p className="card-small-icon">
+                    <img src="images/facebook.png" />
+                </p>
+                <p className="card-small-number">52</p>
+                <p className="card-small-percentage is-danger">
+                    <span>
+                        <img src="images/up.png"/>
+                        2%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">Likes</p>
+                <p className="card-small-icon">
+                    <img src="images/instagram24.png" />
+                </p>
+                <p className="card-small-number">5462</p>
+                <p className="card-small-percentage">
+                    <span>
+                        <img src="images/up.png"/>
+                        2257%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">profile Views</p>
+                <p className="card-small-icon">
+                    <img src="images/instagram24.png" />
+                </p>
+                <p className="card-small-number">52k</p>
+                <p className="card-small-percentage">
+                    <span>
+                        <img src="images/up.png"/>
+                        1375%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">Retweets</p>
+                <p className="card-small-icon">
+                    <img src="images/twitter.png" />
+                </p>
+                <p className="card-small-number">117</p>
+                <p className="card-small-percentage">
+                    <span>
+                        <img src="images/up.png"/>
+                        303%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">Likes</p>
+                <p className="card-small-icon">
+                    <img src="images/twitter.png" />
+                </p>
+                <p className="card-small-number">507</p>
+                <p className="card-small-percentage">
+                    <span>
+                        <img src="images/up.png"/>
+                        553%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">Likes</p>
+                <p className="card-small-icon">
+                    <img src="images/youtube.png" />
+                </p>
+                <p className="card-small-number">107</p>
+                <p className="card-small-percentage is-danger">
+                    <span>
+                        <img src="images/up.png"/>
+                        19%
+                    </span>
+                 
+                </p>
+            </div>
+            <div className="card-small">
+                <p className="card-small-views">Total views</p>
+                <p className="card-small-icon">
+                    <img src="images/youtube.png" />
+                </p>
+                <p className="card-small-number">1407</p>
+                <p className="card-small-percentage is-danger">
+                    <span>
+                        <img src="images/up.png"/>
+                        12%
+                    </span>
+                 
+                </p>
+            </div>*/}
+            </div>
+        </div>
+
+    </section> 
+    )
+}
+
+export default Overview
+
+import React, {useRef, useEffect, useState} from 'react'
+import '../styles/switch.css'
+
+function Switch(){
+    const [checked, setChecked] = useState(false)
+
+    const ref = useRef(null)
+    function handleChange () {
+      console.log(ref.current.checked)
+      setChecked(ref.current.checked)
+      if(ref.current.checked){
+        document.body.classList.remove('is-light-mode')
+        document.body.classList.add('is-dark-mode')
+      } else {
+        document.body.classList.remove('is-dark-mode')
+        document.body.classList.add('is-light-mode')
+      }
+    }
+
+
+
+    useEffect(() => {
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setChecked(true)
+      }
+    }, [])
+
+  
+
+
+    return (
+        <div className="dark-mode">
+          <p className="dark-mode-title">Dark Mode</p>
+          <input ref={ref} type="checkbox" className="checkbox" checked={checked} id="checkbox" onChange={handleChange}/>
+          <label className="switch" htmlFor="checkbox">
+
+          </label>
+        </div>
+    )
+}
+
+export default Switch
+
+import React from 'react'
+import Card from './Card'
+import '../styles/top-card-list.css'
+
+import {generate as id} from 'shortid'
+
+const cardListData = [
+    {
+        userName: '@pepito',
+        followers: '1486',
+        todayFollowers:12,
+        icon: "images/facebook.png",
+        name: 'facebook'
+    },
+    {
+        userName: '@luisa',
+        followers:'28540',
+        todayFollowers:20,
+        icon: "images/twitter.png",
+        name: 'twitter'
+
+
+    },
+    {
+        userName: '@osvaldo',
+        followers:'4550',
+        todayFollowers:30,
+        icon: "images/instagram24.png",
+        name: 'instagram'
+
+
+    },
+    {
+        userName: '@jose',
+        followers:'4140',
+        todayFollowers:-50,
+        icon: "images/youtube.png",
+        name: 'youtube'
+
+
+    },
+]
+
+function TopCardList() {
+    return (
+        <section className="top-card">
+        <div className="wrapper">
+            <div className="grid">
+                {
+                    cardListData.map((cardData)=> <Card key={id} {...cardData}/>)
+                }
+            </div>
+        </div>
+</section>
+    )
+}
+
+export default TopCardList
