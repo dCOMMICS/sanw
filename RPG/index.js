@@ -54,8 +54,16 @@ const npc1 = new GameObject ({
     src:""
 })
 
-hero.sprite.draw(this.ctx);
-npc1.sprite.draw(this.ctx);
+setTimeout(()=>{
+
+    hero.sprite.draw(this.ctx);
+    npc1.sprite.draw(this.ctx);
+
+},200)
+
+
+
+
 }
 
 
