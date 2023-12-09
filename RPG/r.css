@@ -15,4 +15,11 @@ body{
     margin:0 auto ;
     margin-top: 20px;
     outline: 1px solid #fadafa;
+
+    transform: scale(3) translateY(50%);
+}
+
+.game-container canvas {
+    image-rendering: pixelated;
+    
 }
