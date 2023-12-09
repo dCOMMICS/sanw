@@ -55,7 +55,7 @@ const npc1 = new GameObject ({
 })
 
 hero.sprite.draw(this.ctx);
-.sprite.draw(this.ctx);
+npc1.sprite.draw(this.ctx);
 }
 
 
