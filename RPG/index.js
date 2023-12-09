@@ -14,8 +14,8 @@ init (){
     };
     image.src = "/images/maps/DemoLower.png";
 
-const x = 0;
-const y = 0;
+const x = 5;
+const y = 6;
 const hero = new Image ();
 hero.onload = () => {
     // draw the hero
