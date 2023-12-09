@@ -8,7 +8,11 @@ class Sprite {
         this.Image.onload = () => {
             this.isLoaded = true;
         }
+// Shadow
 
+this.shadow = new this.Image();
+this.shadow.src = "";
+this.shadow
 
         // configure Animation and initial state
         this.animations = config.animations || {
