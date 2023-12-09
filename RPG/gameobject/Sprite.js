@@ -24,6 +24,12 @@ class Sprite {
         this.currentAnimationFrame = 0;
     }
 
+    // ref the game obj
+
+    // fix this error
+
+    this.gameObject = config.gameObject;
+
 draw(ctx) {
     const x = this.gameObject.x * 16 -8;
     const y = this.gameObject.y * 16 -18;
