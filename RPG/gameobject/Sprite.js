@@ -28,7 +28,7 @@ class Sprite {
 
     // fix this error
 
-    this.gameObject = config.gameObject;
+    // this.gameObject = config.gameObject;
 
 draw(ctx) {
     const x = this.gameObject.x * 16 -8;
