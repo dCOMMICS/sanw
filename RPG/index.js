@@ -25,8 +25,8 @@ hero.onload = () => {
         0, // top cut
         32, // width of cut
         32, // height of cut
-        x * 16,
-        y * 16,
+        x * 16 - 8,
+        y * 16 - 18,
         32,
         32
         )
