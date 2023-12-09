@@ -16,6 +16,14 @@ init (){
 
 const x = 5;
 const y = 6;
+
+const shadow = new Image();
+shadow.onload = () => {
+
+}
+
+shadow.src = "";
+
 const hero = new Image ();
 hero.onload = () => {
     // draw the hero
