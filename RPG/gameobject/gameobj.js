@@ -5,7 +5,7 @@ class gameobj {
 
         this.sprite = new Sprite({
             gameObeject: this,
-            src: config.src,
+            src: config.src || "",
 
         });
 

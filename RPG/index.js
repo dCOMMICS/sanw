@@ -14,6 +14,8 @@ init (){
     };
     image.src = "/images/maps/DemoLower.png";
 
+    // 
+
 const x = 5;
 const y = 6;
 
