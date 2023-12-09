@@ -11,10 +11,16 @@ class Sprite {
 // Shadow
 
 this.shadow = new this.Image();
-this.shadow.src = "";
+this.useShadow = true; // config.useShadow || false
+if (this.useShadow){
+    this.shadow.src = "";
+}
+
 this.shadow.onload = () => {
     this.isShadowLoaded = true;
 }
+
+
 
         // configure Animation and initial state
         this.animations = config.animations || {
@@ -39,6 +45,8 @@ this.shadow.onload = () => {
 draw(ctx) {
     const x = this.gameObject.x * 16 -8;
     const y = this.gameObject.y * 16 -18;
+
+    this.isShadowLoaded && ctx.drawImage(this.shadow,x,y)
 
 
     ctx.drawImage (this.Image,
