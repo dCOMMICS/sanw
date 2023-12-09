@@ -14,7 +14,8 @@ init (){
     };
     image.src = "/images/maps/DemoLower.png";
 
-    // 
+    
+
 
 const x = 5;
 const y = 6;
@@ -44,6 +45,14 @@ hero.onload = () => {
 }
 
 hero.src = "";
+
+
+// place some game object
+const npc1 = new GameObject ({
+    x:7,
+    y:9,
+    src:""
+})
 
 }
 
