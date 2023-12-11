@@ -1,0 +1,299 @@
+<% include ./partials/header.ejs %>
+  <div class="w-full min-h-screen bg-zinc-900 text-white py-5">
+    <div class="flex justify-between items-center px-4">
+      <a class="text-sm text-blue-500" href="/profile"><i class="ri-arrow-left-s-line"></i> profile</a>
+      <h2 class="leading-none text-sm">Edit Profile</h2>
+      <a class="text-sm" href="/feed"><i class="ri-home-line"></i> home</a>
+    </div>
+    <div class="flex flex-col items-center gap-2 mt-20">
+      <div class="image w-20 h-20 bg-sky-100 rounded-full"></div>
+      <button class="text-blue-500 capitalize">edit picture</button>
+    </div>
+    <div class="gap-5 px-4 mt-10">
+      <h3 class="text-lg leading-none">Edit Account Details</h3>
+      <hr class="opacity-30 my-3">
+      <form class="w-full" action="">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="text" placeholder="username" name="password">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="text" placeholder="name" name="name">
+        <textarea class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900 resize-none" placeholder="Bio"></textarea>
+        <input class="w-full bg-blue-500 px-3 py-3 rounded-md mt-2" type="submit" value="Update Details">
+      </form>
+    </div>
+  </div>
+<% include ./partials/footer.ejs %>
+
+
+'use client';
+import {CartContext, cartProductPrice} from "@/components/AppContext";
+import Trash from "@/components/icons/Trash";
+import AddressInputs from "@/components/layout/AddressInputs";
+import SectionHeaders from "@/components/layout/SectionHeaders";
+import CartProduct from "@/components/menu/CartProduct";
+import {useProfile} from "@/components/UseProfile";
+import Image from "next/image";
+import {useContext, useEffect, useState} from "react";
+import toast from "react-hot-toast";
+
+export default function CartPage() {
+  const {cartProducts,removeCartProduct} = useContext(CartContext);
+  const [address, setAddress] = useState({});
+  const {data:profileData} = useProfile();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.href.includes('canceled=1')) {
+        toast.error('Payment failed 😔');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (profileData?.city) {
+      const {phone, streetAddress, city, postalCode, country} = profileData;
+      const addressFromProfile = {
+        phone,
+        streetAddress,
+        city,
+        postalCode,
+        country
+      };
+      setAddress(addressFromProfile);
+    }
+  }, [profileData]);
+
+  let subtotal = 0;
+  for (const p of cartProducts) {
+    subtotal += cartProductPrice(p);
+  }
+  function handleAddressChange(propName, value) {
+    setAddress(prevAddress => ({...prevAddress, [propName]:value}));
+  }
+  async function proceedToCheckout(ev) {
+    ev.preventDefault();
+    // address and shopping cart products
+
+    const promise = new Promise((resolve, reject) => {
+      fetch('/api/checkout', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          address,
+          cartProducts,
+        }),
+      }).then(async (response) => {
+        if (response.ok) {
+          resolve();
+          window.location = await response.json();
+        } else {
+          reject();
+        }
+      });
+    });
+
+    await toast.promise(promise, {
+      loading: 'Preparing your order...',
+      success: 'Redirecting to payment...',
+      error: 'Something went wrong... Please try again later',
+    })
+  }
+
+  if (cartProducts?.length === 0) {
+    return (
+      <section className="mt-8 text-center">
+        <SectionHeaders mainHeader="Cart" />
+        <p className="mt-4">Your shopping cart is empty 😔</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="mt-8">
+      <div className="text-center">
+        <SectionHeaders mainHeader="Cart" />
+      </div>
+      <div className="mt-8 grid gap-8 grid-cols-2">
+        <div>
+          {cartProducts?.length === 0 && (
+            <div>No products in your shopping cart</div>
+          )}
+          {cartProducts?.length > 0 && cartProducts.map((product, index) => (
+            <CartProduct
+              key={index}
+              product={product}
+              onRemove={removeCartProduct}
+            />
+          ))}
+          <div className="py-2 pr-16 flex justify-end items-center">
+            <div className="text-gray-500">
+              Subtotal:<br />
+              Delivery:<br />
+              Total:
+            </div>
+            <div className="font-semibold pl-2 text-right">
+              ${subtotal}<br />
+              $5<br />
+              ${subtotal + 5}
+            </div>
+          </div>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg">
+          <h2>Checkout</h2>
+          <form onSubmit={proceedToCheckout}>
+            <AddressInputs
+              addressProps={address}
+              setAddressProp={handleAddressChange}
+            />
+            <button type="submit">Pay ${subtotal+5}</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+'use client';
+import DeleteButton from "@/components/DeleteButton";
+import UserTabs from "@/components/layout/UserTabs";
+import {useEffect, useState} from "react";
+import {useProfile} from "@/components/UseProfile";
+import toast from "react-hot-toast";
+
+export default function CategoriesPage() {
+
+  const [categoryName, setCategoryName] = useState('');
+  const [categories, setCategories] = useState([]);
+  const {loading:profileLoading, data:profileData} = useProfile();
+  const [editedCategory, setEditedCategory] = useState(null);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  function fetchCategories() {
+    fetch('/api/categories').then(res => {
+      res.json().then(categories => {
+        setCategories(categories);
+      });
+    });
+  }
+
+  async function handleCategorySubmit(ev) {
+    ev.preventDefault();
+    const creationPromise = new Promise(async (resolve, reject) => {
+      const data = {name:categoryName};
+      if (editedCategory) {
+        data._id = editedCategory._id;
+      }
+      const response = await fetch('/api/categories', {
+        method: editedCategory ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      setCategoryName('');
+      fetchCategories();
+      setEditedCategory(null);
+      if (response.ok)
+        resolve();
+      else
+        reject();
+    });
+    await toast.promise(creationPromise, {
+      loading: editedCategory
+                 ? 'Updating category...'
+                 : 'Creating your new category...',
+      success: editedCategory ? 'Category updated' : 'Category created',
+      error: 'Error, sorry...',
+    });
+  }
+
+  async function handleDeleteClick(_id) {
+    const promise = new Promise(async (resolve, reject) => {
+      const response = await fetch('/api/categories?_id='+_id, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+
+    await toast.promise(promise, {
+      loading: 'Deleting...',
+      success: 'Deleted',
+      error: 'Error',
+    });
+
+    fetchCategories();
+  }
+
+  if (profileLoading) {
+    return 'Loading user info...';
+  }
+
+  if (!profileData.admin) {
+    return 'Not an admin';
+  }
+
+  return (
+    <section className="mt-8 max-w-2xl mx-auto">
+      <UserTabs isAdmin={true} />
+      <form className="mt-8" onSubmit={handleCategorySubmit}>
+        <div className="flex gap-2 items-end">
+          <div className="grow">
+            <label>
+              {editedCategory ? 'Update category' : 'New category name'}
+              {editedCategory && (
+                <>: <b>{editedCategory.name}</b></>
+              )}
+            </label>
+            <input type="text"
+                   value={categoryName}
+                   onChange={ev => setCategoryName(ev.target.value)}
+            />
+          </div>
+          <div className="pb-2 flex gap-2">
+            <button className="border border-primary" type="submit">
+              {editedCategory ? 'Update' : 'Create'}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEditedCategory(null);
+                setCategoryName('');
+              }}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+      <div>
+        <h2 className="mt-8 text-sm text-gray-500">Existing categories</h2>
+        {categories?.length > 0 && categories.map(c => (
+          <div
+            key={c._id}
+            className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center">
+            <div className="grow">
+              {c.name}
+            </div>
+            <div className="flex gap-1">
+              <button type="button"
+                      onClick={() => {
+                        setEditedCategory(c);
+                        setCategoryName(c.name);
+                      }}
+              >
+                Edit
+              </button>
+              <DeleteButton
+                label="Delete"
+                onDelete={() => handleDeleteClick(c._id)} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
