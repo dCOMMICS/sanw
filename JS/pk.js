@@ -17,6 +17,7 @@ async function getAllNames() {
     getAllTypes();
 };
 
+
 /**fetch pokemon types */
 async function getAllTypes() {
     for (let i = 0; i < 18; i++) {
