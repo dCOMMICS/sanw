@@ -87,3 +87,17 @@ body{
     padding: 15rem 0;
 }
 
+
+.about-content {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+}
+.img-side{
+    position: relative;
+}
+
+.text-side{
+    padding-right: 1.5rem;
+}
