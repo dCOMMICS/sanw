@@ -97,6 +97,17 @@ body{
     justify-content: center;
 }
 
+/* p {
+    font-size: 1.6rem;
+    font-weight: bolder;
+    line-height: 1.6;
+    gap: 1.3rem 0;
+    align-items: center;
+    padding-left: 100.5rem;
+    justify-content: center;
+} */
+
+
 .about-content {
     align-items: center;
     display: grid;
