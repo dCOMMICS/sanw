@@ -115,11 +115,11 @@ body{
     margin-right: auto;
 }
 
-/*  hides the about me */
+/*  hides the about me 
 .scroll-in.js-opacity {
     opacity: 0;
   }
-  
+  */
 
 .scroll-in.scrolled{
     
