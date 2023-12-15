@@ -129,6 +129,14 @@ body{
 .scroll-in.unscrolled {
     animation: fade-out-top 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   }
+
+  .section-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--shade-500);
+  }
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
