@@ -32,6 +32,29 @@ nav {
     z-index: 200;
 }
 
+.logo {
+    color: #2d2e32;
+    cursor: pointer;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+nav ul a {
+    color: #2d2e32;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .23s;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
 .skills {
     align-items: center;
     bottom: 0;
