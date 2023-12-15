@@ -108,7 +108,12 @@ body{
     margin-right: auto;
 }
 
-
+.container{
+    width: 90%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
