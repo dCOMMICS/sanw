@@ -158,6 +158,13 @@ body{
     color: var(--grey-text);
     max-width: 60ch;
 }
+
+.section-subtitle p{
+    font-size: var(--text-4xl);
+    letter-spacing: var(--tracking-tight);
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--spacing-10);
+}
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
