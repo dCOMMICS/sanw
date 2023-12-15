@@ -147,6 +147,11 @@ body{
     margin-inline-end: 0px;
     font-weight: bold;
 }
+
+
+.title-icon {
+    display: inline-block;
+}
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
