@@ -152,6 +152,12 @@ body{
 .title-icon {
     display: inline-block;
 }
+
+.section-subtitle {
+    font-size: 1.5rem;
+    color: var(--grey-text);
+    max-width: 60ch;
+}
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
