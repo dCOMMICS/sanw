@@ -114,6 +114,15 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
+
+.scroll-in.scrolled{
+    
+    animation: fade-in-bottom 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.scroll-in.unscrolled {
+    animation: fade-out-top 1s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
 /* p {
     font-size: 1.6rem;
     font-weight: bolder;
