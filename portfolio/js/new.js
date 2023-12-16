@@ -1,4 +1,13 @@
 /*! For license information please see main.71c8b8ac.js.LICENSE.txt */
+
+var tl = gsap.timeline({scrollTrigger:{
+    trigger: ".two",
+    start: "0% 95%",
+    end: "70% 50%",
+    scrub: true,
+    // markers: true,
+}})
+
 !function() {
     var e = {
         888: function(e, n, t) {
