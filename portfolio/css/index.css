@@ -241,6 +241,36 @@ p{
     margin-bottom: var(--spacing-10);
 }
 
+.project {
+    background-color: #f9f9f9;
+    padding: 15rem 0;
+}
+
+.project-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-content p {
+    color: #147efb;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.project-content h3 {
+    color: #2d2e32;
+    font-size: 2.5rem;
+    margin-bottom: 6rem;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 107rem;
+    padding: 0 4rem;
+}
+
 footer {
     background-color: #2d2e32;
     padding: 2rem 0;
