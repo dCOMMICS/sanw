@@ -323,6 +323,23 @@ p{
     line-height: 1.5;
 }
 
+.section-link {
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.link-btn {
+    display: inline-block;
+    border: 2px solid var(--grey-color);
+    background-color: transparent;
+    border-radius: 2em;
+    padding: 1em 2em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    transition: border 500ms, background-color 500ms, color 500ms;
+}
+
 footer {
     background-color: #2d2e32;
     padding: 2rem 0;
