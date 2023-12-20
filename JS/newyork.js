@@ -47,6 +47,9 @@ class Graph {
      this.segments = segments;
   }
 
+
+  
+
   addPoint(point) {
      this.points.push(point);
   }
