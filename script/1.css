@@ -1,0 +1,9 @@
+body{
+    background-color: red;
+}
+
+@media (orientation: potrait) {
+    body {
+        background-color: magenta;
+    }
+}
