@@ -1,0 +1,13 @@
+body {
+	height: 100vh;
+	background: #111;
+	display: grid;
+	place-content: center;
+}
+
+button {
+	font-size: 24px;
+    gap: 10px;
+    padding: 15;
+    white-space: 10;
+}
