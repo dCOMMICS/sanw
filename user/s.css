@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #ffc0cb; /* Pink */
+    color: #333; /* Dark Text Color */
+    margin: 20px;
+  }
+
+  
+
+  h1 {
+    color: #080004; /* Hot Pink */
+    text-align: center;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #777; /* Light Gray */
+  }
