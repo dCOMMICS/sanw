@@ -1,0 +1,22 @@
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+}
+
+.parent {
+    background-color: aquamarine;
+    padding: 50px;
+
+    width: 80%;
+    /* ALWAYS USE % on WIDTH  */
+    margin:  0 auto;
+}
+
+.child {
+    background-color: aqua;
+
+    /* width only 50% of parent element */
+    width: 100%;  
+    height: 250px;
+}
