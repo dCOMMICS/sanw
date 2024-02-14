@@ -1,0 +1,16 @@
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.conco {
+    background: #23424a;
+    color: #fff;
+
+    width: 80%;
+    margin: 0 auto;
+
+    padding: 5em;
+}
