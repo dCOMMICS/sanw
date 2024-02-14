@@ -18,5 +18,7 @@ body {
 
     /* width only 50% of parent element */
     width: 100%;  
+
+    /* stop using heights */
     height: 250px;
 }
